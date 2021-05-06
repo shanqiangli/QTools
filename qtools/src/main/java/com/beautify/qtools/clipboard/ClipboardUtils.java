@@ -9,7 +9,7 @@ import com.beautify.qtools.utils.Utils;
 
 /**
  * <pre>
- *     desc  : utils about clipboard
+ *     desc  : utils about clipboard 剪切板
  * </pre>
  */
 public final class ClipboardUtils {

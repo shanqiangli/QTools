@@ -20,7 +20,7 @@ import androidx.annotation.StringRes;
 
 import com.beautify.qtools.view.ActivityUtils;
 import com.beautify.qtools.screen.AdaptScreenUtils;
-import com.beautify.qtools.common.AppUtils;
+import com.beautify.qtools.common.AppCommonUtils;
 import com.beautify.qtools.screen.BarUtils;
 import com.beautify.qtools.common.ConvertUtils;
 import com.beautify.qtools.encode.EncodeUtils;
@@ -158,19 +158,19 @@ public class UtilsBridge {
     // AppUtils
     ///////////////////////////////////////////////////////////////////////////
     public static boolean isAppRunning(@NonNull final String pkgName) {
-        return AppUtils.isAppRunning(pkgName);
+        return AppCommonUtils.isAppRunning(pkgName);
     }
 
     public static boolean isAppInstalled(final String pkgName) {
-        return AppUtils.isAppInstalled(pkgName);
+        return AppCommonUtils.isAppInstalled(pkgName);
     }
 
     public static boolean isAppDebug() {
-        return AppUtils.isAppDebug();
+        return AppCommonUtils.isAppDebug();
     }
 
     public static void relaunchApp() {
-        AppUtils.relaunchApp();
+        AppCommonUtils.relaunchApp();
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -683,8 +683,8 @@ public class UtilsBridge {
             sb.append("Device Model       : ").append(Build.MODEL).append("\n");
             sb.append("Android Version    : ").append(Build.VERSION.RELEASE).append("\n");
             sb.append("Android SDK        : ").append(Build.VERSION.SDK_INT).append("\n");
-            sb.append("App VersionName    : ").append(AppUtils.getAppVersionName()).append("\n");
-            sb.append("App VersionCode    : ").append(AppUtils.getAppVersionCode()).append("\n");
+            sb.append("App VersionName    : ").append(AppCommonUtils.getAppVersionName()).append("\n");
+            sb.append("App VersionCode    : ").append(AppCommonUtils.getAppVersionCode()).append("\n");
 
             sb.append(getAppended());
             return sb.append(border).append("\n").toString();

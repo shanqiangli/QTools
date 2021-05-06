@@ -13,7 +13,7 @@ import com.beautify.qtools.utils.Utils;
 /**
  * <pre>
  *     time  : 2018/02/08
- *     desc  : utils about brightness
+ *     desc  : utils about brightness 亮度设置
  * </pre>
  */
 public final class BrightnessUtils {

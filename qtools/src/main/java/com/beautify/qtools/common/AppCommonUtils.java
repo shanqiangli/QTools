@@ -30,9 +30,9 @@ import java.util.List;
  *     desc  : utils about app
  * </pre>
  */
-public final class AppUtils {
+public final class AppCommonUtils {
 
-    private AppUtils() {
+    private AppCommonUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
@@ -178,7 +178,7 @@ public final class AppUtils {
     }
 
     /**
-     * Return whether application is foreground.
+     * Return whether application is foreground. 前景
      *
      * @return {@code true}: yes<br>{@code false}: no
      */
@@ -199,7 +199,7 @@ public final class AppUtils {
     }
 
     /**
-     * Return whether application is running.
+     * Return whether application is running.app是否运行
      *
      * @param pkgName The name of the package.
      * @return {@code true}: yes<br>{@code false}: no

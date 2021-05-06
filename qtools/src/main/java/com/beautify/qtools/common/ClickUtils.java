@@ -54,8 +54,7 @@ public class ClickUtils {
     }
 
     /**
-     * Apply scale animation for the views' click.
-     *
+     * Apply scale animation for the views' click. 点击缩放动画     *
      * @param views The views.
      */
     public static void applyPressedViewScale(final View... views) {
@@ -85,7 +84,7 @@ public class ClickUtils {
      * Apply scale animation for the views' click.
      *
      * @param view        The view.
-     * @param scaleFactor The factor of scale for the view.
+     * @param scaleFactor The factor of scale for the view. 正数增大，负数减小
      */
     public static void applyPressedViewScale(final View view, final float scaleFactor) {
         if (view == null) {
@@ -108,7 +107,7 @@ public class ClickUtils {
     /**
      * Apply alpha for the views' click.
      *
-     * @param views  The views.
+     * @param views  The views. 控件透明度
      * @param alphas The alphas for the views.
      */
     public static void applyPressedViewAlpha(final View[] views, final float[] alphas) {
@@ -142,7 +141,7 @@ public class ClickUtils {
     /**
      * Apply alpha for the view's background.
      *
-     * @param view The views.
+     * @param view The views. 背景透明度(背景只能是图片，不能是颜色)
      */
     public static void applyPressedBgAlpha(View view) {
         applyPressedBgAlpha(view, PRESSED_BG_ALPHA_DEFAULT_VALUE);
@@ -159,7 +158,7 @@ public class ClickUtils {
     }
 
     /**
-     * Apply alpha of dark for the view's background.
+     * Apply alpha of dark for the view's background.背景加深透明度（变暗）类似增加阴影
      *
      * @param view The views.
      */
@@ -342,7 +341,7 @@ public class ClickUtils {
     }
 
     /**
-     * Expand the click area of ​​the view
+     * Expand the click area of ​​the view 扩大点击范围
      *
      * @param view       The view.
      * @param expandSize The size.

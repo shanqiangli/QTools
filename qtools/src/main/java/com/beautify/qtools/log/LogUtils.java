@@ -3,13 +3,16 @@ package com.beautify.qtools.log;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Log工具，类似android.util.Log。
  * tag自动产生
  */
 public class LogUtils {
 
-    private static final String TagPrefix = "CENTRIFUGE";
+    private static final String TagPrefix = "LOG";
     public static final int LOG_LEVEL_NONE = 0;     //不输出任和log
     public static final int LOG_LEVEL_DEBUG = 1;    //调试 蓝色
     public static final int LOG_LEVEL_INFO = 2;     //提现 绿色

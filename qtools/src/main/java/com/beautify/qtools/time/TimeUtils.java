@@ -1,6 +1,7 @@
 package com.beautify.qtools.time;
 
 import android.annotation.SuppressLint;
+import android.os.SystemClock;
 
 import androidx.annotation.NonNull;
 
@@ -8,6 +9,7 @@ import com.beautify.qtools.constant.TimeConstants;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -60,6 +62,20 @@ public final class TimeUtils {
      */
     public static String millis2String(final long millis) {
         return millis2String(millis, getDefaultFormat());
+    }
+    public static String millis2String(final String millis) {
+        return millis2String(Long.parseLong(millis), getDefaultFormat());
+    }
+
+    /**
+     * 设置系统时间
+     * @param settingDataTime
+     */
+    public static void setDateTime(String settingDataTime){
+        final long when = string2Date(settingDataTime).getTime();
+        if (when / 1000 < Integer.MAX_VALUE) {
+            SystemClock.setCurrentTimeMillis(when);
+        }
     }
 
     /**
@@ -171,6 +187,10 @@ public final class TimeUtils {
         return date2String(date, getDefaultFormat());
     }
 
+    public static String currentDate2String() {
+        return date2String(new Date(System.currentTimeMillis()), getDefaultFormat());
+    }
+
     /**
      * Date to the formatted time string.
      *
@@ -180,6 +200,10 @@ public final class TimeUtils {
      */
     public static String date2String(final Date date, @NonNull final String pattern) {
         return getSafeDateFormat(pattern).format(date);
+    }
+
+    public static String currentDate2String(@NonNull final String pattern) {
+        return getSafeDateFormat(pattern).format(new Date(System.currentTimeMillis()));
     }
 
     /**
@@ -211,6 +235,9 @@ public final class TimeUtils {
      */
     public static Date millis2Date(final long millis) {
         return new Date(millis);
+    }
+    public static Date millis2Date(final String millis) {
+        return new Date(Long.parseLong(millis));
     }
 
     /**
@@ -936,6 +963,12 @@ public final class TimeUtils {
         return millis2Date(millis + timeSpan2Millis(timeSpan, unit));
     }
 
+    public static Date getDate(String strDate,String timeType) {
+        SimpleDateFormat formatter = new SimpleDateFormat(timeType);
+        ParsePosition pos = new ParsePosition(0);
+        return formatter.parse(strDate, pos);
+    }
+
     /**
      * Return the date differ time span.
      * <p>The pattern is {@code yyyy-MM-dd HH:mm:ss}.</p>
@@ -1207,6 +1240,9 @@ public final class TimeUtils {
     public static String getChineseWeek(final Date date) {
         return new SimpleDateFormat("E", Locale.CHINA).format(date);
     }
+    public static String getChineseWeek() {
+        return new SimpleDateFormat("E", Locale.CHINA).format(new Date(System.currentTimeMillis()));
+    }
 
     /**
      * Return the day of week in Chinese.
@@ -1248,6 +1284,9 @@ public final class TimeUtils {
      */
     public static String getUSWeek(final Date date) {
         return new SimpleDateFormat("EEEE", Locale.US).format(date);
+    }
+    public static String getUSWeek() {
+        return new SimpleDateFormat("EEEE", Locale.US).format(new Date(System.currentTimeMillis()));
     }
 
     /**
@@ -1614,4 +1653,65 @@ public final class TimeUtils {
         return sb.toString();
     }
 
+    /**
+     * Description: 判断某个时间是否在一个时间段内 </br>
+     *
+     * @param nowTime 某个时间 </br>
+     * @param beginTime 开始时间 </br>
+     * @param endTime 结束时间 </br>
+     */
+    public static boolean belongCalendar(Date nowTime, Date beginTime, Date endTime) {
+        Calendar date = Calendar.getInstance();
+        date.setTime(nowTime);
+
+        Calendar begin = Calendar.getInstance();
+        begin.setTime(beginTime);
+
+        Calendar end = Calendar.getInstance();
+        end.setTime(endTime);
+
+        return date.after(begin) && date.before(end);
+    }
+    /**
+     * Description: 判断当前时间是否在一个时间段内 </br>
+     *
+     * @param beginTime 开始时间 </br>
+     * @param endTime 结束时间 </br>
+     */
+    public static boolean belongCalendar(Date beginTime, Date endTime) {
+        return belongCalendar(new Date(System.currentTimeMillis()),beginTime,endTime);
+    }
+
+    /**
+     * 获取指定时间前offset分钟的时间
+     * @param ca
+     * @param offset
+     * @return
+     */
+    public static long getTimeBefore(Calendar ca,int offset){
+        ca.set(Calendar.MINUTE, ca.get(Calendar.MINUTE) - offset);
+        return ca.getTimeInMillis();
+    }
+    public static long getMillisTimeBefore(Date date,int offset){
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(date);
+        ca.set(Calendar.MINUTE, ca.get(Calendar.MINUTE) - offset);
+        return ca.getTimeInMillis();
+    }
+
+    public static Date getDateTimeBefore(Date date,int offset){
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(date);
+        ca.set(Calendar.MINUTE, ca.get(Calendar.MINUTE) - offset);
+        return getDateByMillis(ca.getTimeInMillis());
+    }
+
+    public static Date getDateByMillis(long millis){
+        try {
+            return  getDefaultFormat().parse(millis2String(millis));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

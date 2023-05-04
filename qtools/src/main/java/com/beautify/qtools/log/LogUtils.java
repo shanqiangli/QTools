@@ -3,8 +3,21 @@ package com.beautify.qtools.log;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.elvishew.xlog.LogConfiguration;
+import com.elvishew.xlog.LogItem;
+import com.elvishew.xlog.LogLevel;
+import com.elvishew.xlog.XLog;
+import com.elvishew.xlog.flattener.ClassicFlattener;
+import com.elvishew.xlog.flattener.PatternFlattener;
+import com.elvishew.xlog.interceptor.AbstractFilterInterceptor;
+import com.elvishew.xlog.printer.AndroidPrinter;
+import com.elvishew.xlog.printer.Printer;
+import com.elvishew.xlog.printer.file.FilePrinter;
+import com.elvishew.xlog.printer.file.backup.FileSizeBackupStrategy;
+import com.elvishew.xlog.printer.file.backup.NeverBackupStrategy;
+import com.elvishew.xlog.printer.file.clean.FileLastModifiedCleanStrategy;
+import com.elvishew.xlog.printer.file.naming.ChangelessFileNameGenerator;
+import com.elvishew.xlog.printer.file.naming.DateFileNameGenerator;
 
 /**
  * Log工具，类似android.util.Log。
@@ -48,13 +61,48 @@ public class LogUtils {
         return className;
     }
 
-    private static String generateTag(StackTraceElement caller) {
-        String tag = "(%s.java:%d)";
-        String callerClazzName = caller.getClassName();
-        callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1);
-        tag = String.format(tag, filtrateInnerClass(callerClazzName), caller.getLineNumber());
-        tag = TextUtils.isEmpty(TagPrefix) ? tag : TagPrefix + ":" + tag;
-        return tag;
+    public static void init(){
+        init("MY_TAG","/sdcard/xlog",true);
+    }
+    public static void init(String tag,boolean saveFiles){
+        init(tag,"/sdcard/xlog",saveFiles);
+    }
+    public static void init(String tag){
+        init(tag,"/sdcard/xlog",false);
+    }
+    public static void init(String tag,String path){
+        init(tag,path,true);
+    }
+
+    public static void init(String tag,String path,boolean saveFiles){
+        LogConfiguration config = new LogConfiguration.Builder()
+                .logLevel(LogLevel.ALL)
+                .tag(tag)                                              // 指定 TAG
+                .enableStackTrace(3)                            // 允许打印深度为 3 的调用栈信息，默认禁止
+                .enableBorder()
+                .addInterceptor(new AbstractFilterInterceptor() {
+                    @Override
+                    protected boolean reject(LogItem log) {
+                        if(log.stackTraceInfo != null)
+                            log.stackTraceInfo = log.stackTraceInfo.substring(log.stackTraceInfo.indexOf(")")+1);
+                        return false;
+                    }
+                })
+                .build();
+        Printer androidPrinter = new AndroidPrinter(true);         // 通过 android.util.Log 打印日志的打印器
+        Printer filePrinter = new FilePrinter                      // 打印日志到文件的打印器
+                .Builder(path)                             // 指定保存日志文件的路径
+                .fileNameGenerator(new DateFileNameGenerator())        // 指定日志文件名生成器，默认为 ChangelessFileNameGenerator("log")
+                .backupStrategy(new FileSizeBackupStrategy(1024 * 1024))             // 指定日志文件备份策略，默认为 FileSizeBackupStrategy(1024 * 1024)
+                .cleanStrategy(new FileLastModifiedCleanStrategy(7L * 24L * 60L * 60L * 1000L))     // 指定日志文件清除策略，默认为 NeverCleanStrategy()
+                .flattener(new ClassicFlattener())
+                .build();
+        if(saveFiles){
+            XLog.init(config,androidPrinter,filePrinter);
+        }else{
+            XLog.init(config);
+        }
+
     }
 
     private static StackTraceElement getCallerStackTraceElement() {
@@ -63,78 +111,56 @@ public class LogUtils {
 
     public static void d(String content) {
         if (mLogLevel < LOG_LEVEL_DEBUG) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
-        Log.d(tag, content);
+        XLog.d(content);
     }
 
     public static void d(String content, Throwable tr) {
         if (mLogLevel < LOG_LEVEL_DEBUG) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
-        Log.d(tag, content, tr);
+        XLog.d( content, tr);
     }
 
     public static void e(String content) {
         if (mLogLevel < LOG_LEVEL_ERROR) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
-        Log.e(tag, content);
+        XLog.e( content);
     }
 
     public static void e(String content, Throwable tr) {
         if (mLogLevel < LOG_LEVEL_ERROR) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
-        Log.e(tag, content, tr);
+        XLog.e(content, tr);
     }
 
     public static void i(String content) {
         if (mLogLevel < LOG_LEVEL_INFO) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
-        Log.i(tag, content);
+        XLog.i(content);
     }
 
     public static void i(String content, Throwable tr) {
         if (mLogLevel < LOG_LEVEL_INFO) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
-        Log.i(tag, content, tr);
+        XLog.i(content, tr);
     }
 
     public static void v(String content) {
         if (mLogLevel < LOG_LEVEL_NONE) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
-        Log.v(tag, content);
+        XLog.v(content);
     }
 
     public static void v(String content, Throwable tr) {
         if (mLogLevel < LOG_LEVEL_NONE) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
-        Log.v(tag, content, tr);
+        XLog.v(content, tr);
     }
 
     public static void w(String content) {
         if (mLogLevel < LOG_LEVEL_WARN) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
-        Log.w(tag, content);
+        XLog.w(content);
     }
 
     public static void w(String content, Throwable tr) {
         if (mLogLevel < LOG_LEVEL_WARN) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
-        Log.w(tag, content, tr);
+        XLog.w(content, tr);
     }
 
     public static void w(Throwable tr) {
         if (mLogLevel < LOG_LEVEL_WARN) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
-        Log.w(tag, tr);
+        XLog.w(tr);
     }
 }

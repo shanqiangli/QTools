@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        LogUtils.init();
+
         //当前亮度
         LogUtils.d("lsq---1>>>"+BrightnessUtils.getBrightness());
         LogUtils.d("lsq---2>>>"+BrightnessUtils.getWindowBrightness(this.getWindow()));
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         LogUtils.d("lsq---4>>>"+ AppCommonUtils.isAppDebug());
         LogUtils.d("lsq---5>>>"+ AppCommonUtils.getAppPath());
         LogUtils.d("lsq---6>>>"+ AppCommonUtils.getAppVersionName());
-        LogUtils.d("lsq---7>>>"+ AppCommonUtils.getAppInfo().toString());
+        LogUtils.e("lsq---7>>>"+ AppCommonUtils.getAppInfo().toString());
         LogUtils.d("lsq---8>>>"+ AppCommonUtils.getApkInfo(AppCommonUtils.getAppPath()));
 //        for(AppUtils.AppInfo model:AppUtils.getAppsInfo()){
 //            LogUtils.d("lsq---9>>>"+ model.toString());

@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LogUtils.init("centrifuge_log");
-        LogUtils.setLogLevel(LogUtils.LOG_LEVEL_INFO);
+        LogUtils.setLogLevel(LogUtils.LOG_LEVEL_NONE);
 
         //当前亮度
         LogUtils.d("lsq---1>>>"+BrightnessUtils.getBrightness());

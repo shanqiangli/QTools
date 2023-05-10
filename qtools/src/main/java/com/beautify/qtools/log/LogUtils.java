@@ -22,12 +22,12 @@ import java.io.IOException;
  * tag自动产生
  */
 public class LogUtils {
-    public static final int LOG_LEVEL_NONE = 0;     //不输出任和log
+    public static final int LOG_LEVEL_NONE = 5;     //不输出任和log
     public static final int LOG_LEVEL_DEBUG = 1;    //调试 蓝色
     public static final int LOG_LEVEL_INFO = 2;     //提现 绿色
     public static final int LOG_LEVEL_WARN = 3;     //警告 橙色
     public static final int LOG_LEVEL_ERROR = 4;    //错误 红色
-    public static final int LOG_LEVEL_ALL = 5;      //输出所有等级
+    public static final int LOG_LEVEL_ALL = 0;      //输出所有等级
 
     /**
      * 允许输出的log日志等级

@@ -1,7 +1,6 @@
 package com.beautify.qtools.log;
 
 import android.annotation.SuppressLint;
-import android.os.Environment;
 
 import com.elvishew.xlog.LogConfiguration;
 import com.elvishew.xlog.LogItem;
@@ -12,9 +11,11 @@ import com.elvishew.xlog.interceptor.AbstractFilterInterceptor;
 import com.elvishew.xlog.printer.AndroidPrinter;
 import com.elvishew.xlog.printer.Printer;
 import com.elvishew.xlog.printer.file.FilePrinter;
-import com.elvishew.xlog.printer.file.backup.FileSizeBackupStrategy;
+import com.elvishew.xlog.printer.file.backup.FileSizeBackupStrategy2;
 import com.elvishew.xlog.printer.file.clean.FileLastModifiedCleanStrategy;
 import com.elvishew.xlog.printer.file.naming.DateFileNameGenerator;
+
+import java.io.IOException;
 
 /**
  * Log工具，类似android.util.Log。
@@ -46,13 +47,13 @@ public class LogUtils {
 
 
     public static void init(){
-        init("MY_TAG", Environment.getExternalStorageDirectory().getPath()+"/xlog",true);
+        init("MY_TAG", "/sdcard/xlog",true);
     }
     public static void init(String tag,boolean saveFiles){
-        init(tag,Environment.getExternalStorageDirectory().getPath()+"/xlog",saveFiles);
+        init(tag,"/sdcard/xlog",saveFiles);
     }
     public static void init(String tag){
-        init(tag,Environment.getExternalStorageDirectory().getPath()+"/xlog",true);
+        init(tag,"/sdcard/xlog",true);
     }
     public static void init(String tag,String path){
         init(tag,path,true);
@@ -73,12 +74,12 @@ public class LogUtils {
                     }
                 })
                 .build();
-        Printer androidPrinter = new AndroidPrinter(true);         // 通过 android.util.Log 打印日志的打印器
-        Printer filePrinter = new FilePrinter                      // 打印日志到文件的打印器
-                .Builder(path)                             // 指定保存日志文件的路径
-                .fileNameGenerator(new DateFileNameGenerator())        // 指定日志文件名生成器，默认为 ChangelessFileNameGenerator("log")
-                .backupStrategy(new FileSizeBackupStrategy(5 * 1024 * 1024))             // 指定日志文件备份策略，默认为 FileSizeBackupStrategy(1024 * 1024)
-                .cleanStrategy(new FileLastModifiedCleanStrategy(5L * 24L * 60L * 60L * 1000L))     // 指定日志文件清除策略，默认为 NeverCleanStrategy()
+        Printer androidPrinter = new AndroidPrinter(true);                                            // 通过 android.util.Log 打印日志的打印器
+        Printer filePrinter = new FilePrinter                                                                     // 打印日志到文件的打印器
+                .Builder(path)                                                                                    // 指定保存日志文件的路径
+                .fileNameGenerator(new DateFileNameGenerator())                                                   // 指定日志文件名生成器，默认为 ChangelessFileNameGenerator("log")
+                .backupStrategy(new FileSizeBackupStrategy2(20 * 1024 * 1024,20))         // 指定日志文件备份策略，默认为 FileSizeBackupStrategy(1024 * 1024)
+                .cleanStrategy(new FileLastModifiedCleanStrategy(3L * 24L * 60L * 60L * 1000L))     // 指定日志文件清除策略，默认为 NeverCleanStrategy()
                 .flattener(new ClassicFlattener())
                 .build();
         if(saveFiles){
@@ -188,5 +189,8 @@ public class LogUtils {
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         XLog.w(tag + tr);
+    }
+    public static void compress(String folderPath, String zipFilePath) throws IOException {
+        com.elvishew.xlog.LogUtils.compress(folderPath,zipFilePath);
     }
 }

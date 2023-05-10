@@ -15,6 +15,8 @@ import com.beautify.qtools.common.ClickUtils;
 import com.beautify.qtools.log.LogUtils;
 import com.beautify.qtools.view.ActivityUtils;
 
+import java.io.IOException;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
         LogUtils.d("lsq---6>>>"+ AppCommonUtils.getAppVersionName());
         LogUtils.e("lsq---7>>>"+ AppCommonUtils.getAppInfo().toString());
         LogUtils.d("lsq---8>>>"+ AppCommonUtils.getApkInfo(AppCommonUtils.getAppPath()));
+        try {
+            LogUtils.compress("/sdcard/xlog","/sdcard/log.zip");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 //        for(AppUtils.AppInfo model:AppUtils.getAppsInfo()){
 //            LogUtils.d("lsq---9>>>"+ model.toString());
 //        }

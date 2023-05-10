@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LogUtils.init();
+        LogUtils.init("centrifuge_log");
 
         //当前亮度
         LogUtils.d("lsq---1>>>"+BrightnessUtils.getBrightness());

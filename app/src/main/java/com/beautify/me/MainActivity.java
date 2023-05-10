@@ -25,13 +25,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LogUtils.init("centrifuge_log");
+        LogUtils.setLogLevel(LogUtils.LOG_LEVEL_INFO);
 
         //当前亮度
         LogUtils.d("lsq---1>>>"+BrightnessUtils.getBrightness());
-        LogUtils.d("lsq---2>>>"+BrightnessUtils.getWindowBrightness(this.getWindow()));
-        LogUtils.d("lsq---3>>>"+BrightnessUtils.isAutoBrightnessEnabled());
-        LogUtils.d("lsq---4>>>"+ AppCommonUtils.isAppDebug());
-        LogUtils.d("lsq---5>>>"+ AppCommonUtils.getAppPath());
+        LogUtils.i("lsq---2>>>"+BrightnessUtils.getWindowBrightness(this.getWindow()));
+        LogUtils.i("lsq---3>>>"+BrightnessUtils.isAutoBrightnessEnabled());
+        LogUtils.w("lsq---4>>>"+ AppCommonUtils.isAppDebug());
+        LogUtils.e("lsq---5>>>"+ AppCommonUtils.getAppPath());
         LogUtils.d("lsq---6>>>"+ AppCommonUtils.getAppVersionName());
         LogUtils.e("lsq---7>>>"+ AppCommonUtils.getAppInfo().toString());
         LogUtils.d("lsq---8>>>"+ AppCommonUtils.getApkInfo(AppCommonUtils.getAppPath()));

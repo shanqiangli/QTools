@@ -115,77 +115,77 @@ public class LogUtils {
     }
 
     public static void d(String content) {
-        if (mLogLevel < LOG_LEVEL_DEBUG) return;
+        if (mLogLevel > LOG_LEVEL_DEBUG) return;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         XLog.d(tag + content);
     }
 
     public static void d(String content, Throwable tr) {
-        if (mLogLevel < LOG_LEVEL_DEBUG) return;
+        if (mLogLevel > LOG_LEVEL_DEBUG) return;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         XLog.d( tag + content, tr);
     }
 
     public static void e(String content) {
-        if (mLogLevel < LOG_LEVEL_ERROR) return;
+        if (mLogLevel > LOG_LEVEL_ERROR) return;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         XLog.e( tag + content);
     }
 
     public static void e(String content, Throwable tr) {
-        if (mLogLevel < LOG_LEVEL_ERROR) return;
+        if (mLogLevel > LOG_LEVEL_ERROR) return;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         XLog.e(tag + content, tr);
     }
 
     public static void i(String content) {
-        if (mLogLevel < LOG_LEVEL_INFO) return;
+        if (mLogLevel > LOG_LEVEL_INFO) return;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         XLog.i(tag + content);
     }
 
     public static void i(String content, Throwable tr) {
-        if (mLogLevel < LOG_LEVEL_INFO) return;
+        if (mLogLevel > LOG_LEVEL_INFO) return;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         XLog.i(tag + content, tr);
     }
 
     public static void v(String content) {
-        if (mLogLevel < LOG_LEVEL_NONE) return;
+        if (mLogLevel > LOG_LEVEL_NONE) return;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         XLog.v(tag + content);
     }
 
     public static void v(String content, Throwable tr) {
-        if (mLogLevel < LOG_LEVEL_NONE) return;
+        if (mLogLevel > LOG_LEVEL_NONE) return;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         XLog.v(tag + content, tr);
     }
 
     public static void w(String content) {
-        if (mLogLevel < LOG_LEVEL_WARN) return;
+        if (mLogLevel > LOG_LEVEL_WARN) return;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         XLog.w(tag + content);
     }
 
     public static void w(String content, Throwable tr) {
-        if (mLogLevel < LOG_LEVEL_WARN) return;
+        if (mLogLevel > LOG_LEVEL_WARN) return;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         XLog.w(tag + content, tr);
     }
 
     public static void w(Throwable tr) {
-        if (mLogLevel < LOG_LEVEL_WARN) return;
+        if (mLogLevel > LOG_LEVEL_WARN) return;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         XLog.w(tag + tr);

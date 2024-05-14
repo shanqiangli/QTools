@@ -35,6 +35,8 @@ public class LogUtils {
      * 就不会输出任何的Log日志了.
      */
     private static int mLogLevel = LOG_LEVEL_ALL;
+    public static long saveDays = 7L;//默认保存3天的log数据
+    public static int singleFileSize = 10;//单位M
 
     /**
      * 给输出的Log等级赋值
@@ -78,8 +80,8 @@ public class LogUtils {
         Printer filePrinter = new FilePrinter                                                                     // 打印日志到文件的打印器
                 .Builder(path)                                                                                    // 指定保存日志文件的路径
                 .fileNameGenerator(new DateFileNameGenerator())                                                   // 指定日志文件名生成器，默认为 ChangelessFileNameGenerator("log")
-                .backupStrategy(new FileSizeBackupStrategy2(20 * 1024 * 1024,20))         // 指定日志文件备份策略，默认为 FileSizeBackupStrategy(1024 * 1024)
-                .cleanStrategy(new FileLastModifiedCleanStrategy(3L * 24L * 60L * 60L * 1000L))     // 指定日志文件清除策略，默认为 NeverCleanStrategy()
+                .backupStrategy(new FileSizeBackupStrategy2(singleFileSize * 1024 * 1024,10))         // 指定日志文件备份策略，默认为 FileSizeBackupStrategy(1024 * 1024)
+                .cleanStrategy(new FileLastModifiedCleanStrategy(saveDays * 24L * 60L * 60L * 1000L))     // 指定日志文件清除策略，默认为 NeverCleanStrategy()
                 .flattener(new ClassicFlattener())
                 .build();
         if(saveFiles){
@@ -192,5 +194,13 @@ public class LogUtils {
     }
     public static void compress(String folderPath, String zipFilePath) throws IOException {
         com.elvishew.xlog.LogUtils.compress(folderPath,zipFilePath);
+    }
+
+    public static void setSaveDays(long saveDays) {
+        LogUtils.saveDays = saveDays;
+    }
+
+    public static void setSingleFileSize(int singleFileSize) {
+        LogUtils.singleFileSize = singleFileSize;
     }
 }
